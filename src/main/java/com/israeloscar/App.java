@@ -1,9 +1,6 @@
 package com.israeloscar;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.Scanner;
 
 
@@ -27,29 +24,44 @@ public class App {
 
             Connection conexao = DriverManager.getConnection(url, usuario, senha);
 
-            String sql = """
+            String sqlInsert = """
             INSERT INTO produtos(nome, preco)
             VALUES(?,?)
             """;
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+
+            String sqlSelect = """
+                    SELECT * FROM produtos
+                    """;
+
+            PreparedStatement stmtInsert = conexao.prepareStatement(sqlInsert);
+
+            PreparedStatement stmtSelect = conexao.prepareStatement(sqlSelect);
 
 
-            stmt.setString(1, nome);
-            stmt.setDouble(2, preco);
+            stmtInsert.setString(1, nome);
+            stmtInsert.setDouble(2, preco);
 
-            int linhasAfetadas = stmt.executeUpdate();
+            int linhasAfetadas = stmtInsert.executeUpdate();
+
+            ResultSet rs = stmtSelect.executeQuery();
 
             System.out.println("Produto cadastrado com sucesso! Linhas afetadas: " + linhasAfetadas);
 
-            sc.close();
-            stmt.close();
+            while (rs.next()) {
+                System.out.println("ID: " + rs.getInt("id") + " | Nome: " + rs.getString("nome") + " | Preço: " + rs.getDouble("preco"));
+            }
+
+            rs.close();
+            stmtInsert.close();
+            stmtSelect.close();
             conexao.close();
+            sc.close();
             System.out.println("Fim da conexão!");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
 
+    }
 }
 
