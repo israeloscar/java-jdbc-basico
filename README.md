@@ -1,6 +1,6 @@
-# ☕ Java JDBC — Cadastro e Listagem de Produtos (MySQL)
+# ☕ Java JDBC — CRUD de Produtos (MySQL)
 
-Projeto simples em Java utilizando JDBC para conexão com banco de dados MySQL, inserção e listagem de produtos via console.
+Sistema de cadastro de produtos via console, desenvolvido em Java com JDBC e MySQL. Permite cadastrar, listar, atualizar e deletar produtos através de um menu interativo.
 
 Este projeto faz parte do meu aprendizado de Java Backend com foco em conseguir meu primeiro emprego como desenvolvedor. 🚀
 
@@ -8,27 +8,22 @@ Este projeto faz parte do meu aprendizado de Java Backend com foco em conseguir 
 
 ## 📌 Objetivo
 
-O objetivo deste projeto é praticar:
-
-- Conexão entre Java e MySQL usando JDBC.
-- Uso de PreparedStatement para INSERT e SELECT.
-- Inserção de dados no banco via console.
-- Listagem de todos os produtos cadastrados.
-- Boas práticas de segurança com variáveis de ambiente.
+Praticar a conexão entre Java e MySQL usando JDBC, implementando um CRUD completo com menu interativo no console.
 
 ---
 
 ## 🧠 Conceitos aplicados
 
 - JDBC (Java Database Connectivity).
-- DriverManager e Connection.
-- PreparedStatement.
-- ResultSet (navegação linha por linha com rs.next()).
-- executeUpdate() para INSERT.
-- executeQuery() para SELECT.
-- Scanner (entrada de dados via console).
-- Variáveis de ambiente (System.getenv).
-- Fechamento de recursos na ordem inversa de abertura.
+- `Connection` e `DriverManager` para conexão com o banco.
+- `PreparedStatement` para executar SQL com parâmetros seguros.
+- `ResultSet` para navegar pelos resultados do SELECT.
+- `executeUpdate()` para INSERT, UPDATE e DELETE.
+- `executeQuery()` para SELECT.
+- Separação de responsabilidades em métodos.
+- Variáveis de ambiente com `System.getenv` para não expor a senha no código.
+- Opção de voltar ao menu com `-1` em cada operação.
+- Fechamento correto de recursos na ordem inversa de abertura.
 
 ---
 
@@ -59,7 +54,7 @@ jdbc-mysql/
 
 ---
 
-## ⚙️ Como instalar e executar o projeto
+## ⚙️ Como instalar e executar
 
 ### 1. Clone o repositório
 
@@ -83,16 +78,14 @@ CREATE TABLE produtos (
 
 ### 3. Configure a variável de ambiente
 
-Crie a variável no sistema operacional:
-
 ```
 MYSQL_PASSWORD=sua_senha_mysql
 ```
 
-No código Java, ela é lida automaticamente:
+No Windows, pelo terminal:
 
-```java
-String senha = System.getenv("MYSQL_PASSWORD");
+```
+setx MYSQL_PASSWORD "sua_senha_mysql"
 ```
 
 ### 4. Execute o projeto
@@ -104,14 +97,41 @@ Abra no IntelliJ IDEA e rode `App.java`.
 ## 💡 Exemplo de uso
 
 ```
-Nome do produto que deseja adicionar: Mouse Gamer
-Preço do produto que deseja adicionar (ex: 89.90): 89.90
+----Menu CRUD----
+1 - Adicionar um produto
+2 - Listar todos os produtos
+3 - Atualizar um produto
+4 - Deletar um produto
+0 - Sair
+Escolha uma opção: 1
 
+Nome do produto que deseja adicionar(ou -1 para voltar): Mouse Gamer
+Preço do produto que deseja adicionar (ex: 89.90): 89.90
 Produto cadastrado com sucesso! Linhas afetadas: 1
 
-ID: 1 | Nome: Mouse Gamer | Preço: 89.9
-ID: 2 | Nome: Teclado | Preço: 150.0
+----Menu CRUD----
+Escolha uma opção: 2
 
+ID: 1 | Nome: Mouse Gamer | Preço: 89.9
+
+----Menu CRUD----
+Escolha uma opção: 3
+
+ID: 1 | Nome: Mouse Gamer | Preço: 89.9
+Digite o id do produto que deseja atualizar(ou digite -1 para voltar): 1
+Qual será o novo nome: Mouse Gamer RGB
+Qual será o novo preço: 120.00
+Produto atualizado com sucesso! Linhas afetadas: 1
+
+----Menu CRUD----
+Escolha uma opção: 4
+
+ID: 1 | Nome: Mouse Gamer RGB | Preço: 120.0
+Digite o id do produto que deseja deletar(ou -1 para voltar): 1
+Produto deletado com sucesso! Linhas afetadas: 1
+
+----Menu CRUD----
+Escolha uma opção: 0
 Fim da conexão!
 ```
 
@@ -119,15 +139,15 @@ Fim da conexão!
 
 ## 📈 Próximos passos
 
-- Implementar UPDATE (editar produtos).
-- Implementar DELETE (remover produtos).
-- Criar um CRUD completo no console.
-- Evoluir para Spring Boot 🚀
+- Refatorar com try-with-resources para fechamento automático de recursos.
+- Evoluir para Spring Boot com API REST 🚀
 
 ---
 
 ## 👤 Autor
 
 **Israel Oscar**
+
+[github.com/israeloscar](https://github.com/israeloscar)
 
 *Atualizado conforme avanço nos estudos.* 📈
